@@ -1,0 +1,81 @@
+{
+  "name": "task-manager",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "gulp server",
+    "build": "npx webpack -p --env production",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramzesnic/project-lvl4-s457.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramzesnic/project-lvl4-s457/issues"
+  },
+  "homepage": "https://github.com/ramzesnic/project-lvl4-s457#readme",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "autoprefixer": "^9.6.1",
+    "babel-loader": "^8.0.6",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^3.1.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "gulp-util": "^3.0.8",
+    "jquery": "^3.4.1",
+    "jquery-ujs": "^1.2.2",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-flash-simple": "0.0.3",
+    "koa-generic-session": "^2.0.1",
+    "koa-logger": "^3.2.1",
+    "koa-methodoverride": "^2.0.0",
+    "koa-pug": "^3.0.0-2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-webpack": "^5.2.4",
+    "lodash": "^4.17.15",
+    "pg": "^7.12.1",
+    "postcss-loader": "^3.0.0",
+    "rollbar": "^2.11.0",
+    "sequelize": "^5.15.1",
+    "sequelize-cli": "^5.5.0",
+    "sqlite3": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "umzug": "^2.2.0",
+    "webpack": "^4.39.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.14.1",
+    "jest": "^24.8.0",
+    "jest-cli": "^24.8.0",
+    "jest-supertest-matchers": "0.0.2",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2",
+    "webpack-cli": "^3.3.6"
+  }
+}

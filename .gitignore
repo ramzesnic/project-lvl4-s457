@@ -1,0 +1,8 @@
+/node_modules/
+*.log
+dist
+.tern-port
+public/assets
+.bash_history
+install-modules.sh
+.env
