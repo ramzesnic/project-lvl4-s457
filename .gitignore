@@ -6,3 +6,4 @@ public/assets
 .bash_history
 install-modules.sh
 .env
+*.sqlite

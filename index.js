@@ -1,4 +1,5 @@
 // @ts-check
+import _ from 'lodash';
 import path from 'path';
 import Koa from 'koa';
 import koaLogger from 'koa-logger';
@@ -8,6 +9,7 @@ import flash from 'koa-flash-simple';
 import serve from 'koa-static';
 import Pug from 'koa-pug';
 import koaWebpack from 'koa-webpack';
+import bodyParser from 'koa-bodyparser';
 import Rollbar from 'rollbar';
 import webpackConfig from './webpack.config';
 import container from './container';
@@ -22,6 +24,7 @@ export default () => {
     captureUnhandledRejections: true,
   });
 
+  app.keys = ['my app key'];
   // @ts-ignore
   app.use(session(app));
   app.use(flash());
@@ -32,6 +35,7 @@ export default () => {
     };
     await next();
   });
+  app.use(bodyParser());
   app.use(serve(path.join(__dirname, 'public')));
 
   if (process.env.NODE_ENV !== 'production') {
@@ -41,6 +45,10 @@ export default () => {
     }).then(m => app.use(m));
   }
 
+  const router = new Router();
+  addRoutes(router, container);
+  app.use(router.routes());
+
   const pug = new Pug({
     viewPath: path.join(__dirname, 'views'),
     noCache: process.env.NODE_ENV === 'development',
@@ -49,12 +57,13 @@ export default () => {
     compileDebug: true,
     locals: [],
     basedir: path.join(__dirname, 'views'),
+    helperPath: [
+      { _ },
+      { urlFor: (...args) => router.url(...args) },
+    ],
   });
   pug.use(app);
 
-  const router = new Router();
-  addRoutes(router, container);
-  app.use(router.routes());
   app.use(async (ctx, next) => {
     try {
       await next();
