@@ -10,6 +10,7 @@ import serve from 'koa-static';
 import Pug from 'koa-pug';
 import koaWebpack from 'koa-webpack';
 import bodyParser from 'koa-bodyparser';
+import methodOverride from 'koa-methodoverride';
 import Rollbar from 'rollbar';
 import webpackConfig from './webpack.config';
 import container from './container';
@@ -36,6 +37,13 @@ export default () => {
     await next();
   });
   app.use(bodyParser());
+  app.use(methodOverride((req) => {
+    // container.logger('in methodOverride, %j', req.body);
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      return req.body._method; // eslint-disable-line
+    }
+    return null;
+  }, { methods: ['POST', 'GET'] }));
   app.use(serve(path.join(__dirname, 'public')));
 
   if (process.env.NODE_ENV !== 'production') {
@@ -47,6 +55,7 @@ export default () => {
 
   const router = new Router();
   addRoutes(router, container);
+  app.use(router.allowedMethods());
   app.use(router.routes());
 
   const pug = new Pug({

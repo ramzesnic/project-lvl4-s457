@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 
@@ -24,9 +25,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                autoprefixer({
-                  browsers: ['ie >= 10', 'last 4 versions'],
-                }),
+                autoprefixer({}),
               ],
               sourceMap: true,
             },
@@ -34,5 +33,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    }),
+  ],
 };
