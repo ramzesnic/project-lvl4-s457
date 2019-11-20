@@ -24,7 +24,7 @@ export default (router, container) => {
       }
       logger('email or password were wrong %j', user);
       ctx.flash.set('email or password were wrong');
-      ctx.render('sessions/new', { f: buildFormObj({ email }) });
+      ctx.redirect(router.url('newSession'));
     })
     .delete('session', '/session', (ctx) => {
       ctx.session = {};

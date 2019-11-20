@@ -20,3 +20,6 @@ mixin input(f, property, options = { as: 'text' })
 mixin button(f, type = 'submit')
   .form-group
     input(class='btn btn-primary' type=`${type}` value=`Save`)
+
+mixin buttonLink(btnHref = 'root', btnMethog = 'post', btnValue = 'Save', btnClass = 'btn-primary')
+  a(href=urlFor(`${btnHref}`) class=`btn ${btnClass}` data-method=`${btnMethog}` rel='nofollow')=btnValue

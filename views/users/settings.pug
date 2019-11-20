@@ -1,0 +1,10 @@
+extends /layouts/application.pug
+
+block content
+  +formFor(f, { url: urlFor('userSettings'), method: 'patch' })
+    +input(f, 'email')
+    +input(f, 'firstName')
+    +input(f, 'lastName')
+    +input(f, 'password', { as: 'password' })
+    +button(f)
+  +buttonLink('userSettings', 'delete', 'Удалить пользователя', 'btn-danger')
