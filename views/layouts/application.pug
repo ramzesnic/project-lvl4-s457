@@ -13,7 +13,7 @@ html(lang="en")
       .collapse.navbar-collapse
         ul.navbar-nav.mr-auto
           li.nav-item.active
-            a.nav-link(href='#') Users
+            a.nav-link(href=urlFor('users')) Users
         ul.navbar-nav
           if isSignedIn()
             li.nav-item

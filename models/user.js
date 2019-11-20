@@ -27,6 +27,12 @@ export default (sequelize, DataTypes) => {
         len: [1, +Infinity],
       },
     },
-  }, {});
+  }, {
+    getterMethods: {
+      fullName() {
+        return `${this.firstName} ${this.lastName}`;
+      },
+    },
+  });
   return User;
 };

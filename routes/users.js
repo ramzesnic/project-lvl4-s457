@@ -9,6 +9,10 @@ export default (router, container) => {
       const user = {};
       ctx.render('users/new', { f: buildFormObj(user) });
     })
+    .get('users', '/users', async (ctx) => {
+      const users = await User.findAll();
+      ctx.render('users', { users });
+    })
     .post('users', '/users', async (ctx) => {
       const { request: { body: { form } } } = ctx;
       logger('Form %j', form);
@@ -43,7 +47,7 @@ export default (router, container) => {
     })
     .delete('userSettings', '/users/settings', async (ctx) => {
       const { userId } = ctx.session;
-      const user =  await User.findByPk(userId);
+      const user = await User.findByPk(userId);
       try {
         user.destroy();
         ctx.session = {};
