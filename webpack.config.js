@@ -3,7 +3,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: (process.env.NODE_ENV && process.env.NODE_ENV !== 'test') ? process.env.NODE_ENV : 'development',
   entry: ['./src/index.js'],
   output: {
     path: path.join(__dirname, 'public', 'assets'),

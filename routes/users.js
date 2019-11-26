@@ -1,5 +1,6 @@
 // @ts-check
 import buildFormObj from '../lib/formObjectBuilder';
+// @ts-ignore
 import { User } from '../models';
 
 export default (router, container) => {
@@ -30,19 +31,24 @@ export default (router, container) => {
     .get('userSettings', '/users/settings', async (ctx) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
+      if (!user) {
+        ctx.throw(401, 'Доступ запрещен');
+      }
       ctx.render('users/settings', { f: buildFormObj(user) });
     })
     .patch('userSettings', '/users/settings', async (ctx) => {
       const { request: { body: { form } } } = ctx;
+      const { userId } = ctx.session;
+      const user = await User.findByPk(userId);
+      if (!user) {
+        ctx.throw(401, 'Доступ запрещен');
+      }
       try {
-        const { userId } = ctx.session;
-        const user = await User.findByPk(userId);
         await user.update(form);
         ctx.flash.set('Пользователь обновлен');
         ctx.redirect(router.url('userSettings'));
       } catch (e) {
-        ctx.flash.set('Ошибка редактирования пользователя');
-        ctx.redirect(router.url('root'));
+        ctx.render('users/settings', { f: buildFormObj(user, e) });
       }
     })
     .delete('userSettings', '/users/settings', async (ctx) => {

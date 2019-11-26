@@ -32,6 +32,10 @@ export default (sequelize, DataTypes) => {
       fullName() {
         return `${this.firstName} ${this.lastName}`;
       },
+      formatedDate() {
+        const date = new Date(this.createdAt);
+        return date.toLocaleString();
+      },
     },
   });
   return User;

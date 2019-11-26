@@ -7,7 +7,7 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "start": "gulp server",
     "build": "npx webpack -p --env production",
     "postinstall": "npm run build"
@@ -71,6 +71,7 @@
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.14.1",
+    "faker": "^4.1.0",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
     "jest-supertest-matchers": "0.0.2",
