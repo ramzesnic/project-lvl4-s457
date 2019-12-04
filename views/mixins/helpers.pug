@@ -1,0 +1,8 @@
+mixin getNavItem(pathName, name)
+  - const url = urlFor(pathName);
+  if (isActiveUrl(url))
+    li.nav-item.active
+      a.nav-link(href=url)= name
+  else
+    li.nav-item
+      a.nav-link(href=url)= name

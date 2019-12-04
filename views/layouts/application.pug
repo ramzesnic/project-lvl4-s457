@@ -1,4 +1,5 @@
 include /mixins/forms.pug
+include /mixins/helpers.pug
 
 doctype html
 html(lang="en")
@@ -12,8 +13,8 @@ html(lang="en")
         span.navbar-toggler-icon
       .collapse.navbar-collapse
         ul.navbar-nav.mr-auto
-          li.nav-item.active
-            a.nav-link(href=urlFor('users')) Users
+          +getNavItem('users', 'Users')
+          +getNavItem('statusAll', 'Status')
         ul.navbar-nav
           if isSignedIn()
             li.nav-item

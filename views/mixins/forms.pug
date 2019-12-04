@@ -12,7 +12,7 @@ mixin formFor(f, options = {})
 mixin input(f, property, options = { as: 'text' })
   - const value = f.object[property] === undefined ? '' : f.object[property]
   .form-group(class=(f.errors[property] && 'has-danger'))
-    label= property
+    label= _.upperFirst(property)
     input(name=getInputName(f, property) class='form-control' type=options['as'] value=`${value}`)
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
@@ -22,4 +22,5 @@ mixin button(f, type = 'submit')
     input(class='btn btn-primary' type=`${type}` value=`Save`)
 
 mixin buttonLink(btnHref = 'root', btnMethog = 'post', btnValue = 'Save', btnClass = 'btn-primary')
-  a(href=urlFor(`${btnHref}`) class=`btn ${btnClass}` data-method=`${btnMethog}` rel='nofollow')=btnValue
+  - const url = btnHref instanceof Array ? urlFor(...btnHref) : urlFor(btnHref)
+  a(href=url class=`btn ${btnClass}` data-method=`${btnMethog}` rel='nofollow')=btnValue

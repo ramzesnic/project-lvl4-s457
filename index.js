@@ -32,13 +32,13 @@ export default () => {
   app.use(async (ctx, next) => {
     ctx.state = {
       flash: ctx.flash,
+      isActiveUrl: (currentUrl) => currentUrl === ctx.url,
       isSignedIn: () => ctx.session.userId !== undefined,
     };
     await next();
   });
   app.use(bodyParser());
   app.use(methodOverride((req) => {
-    // container.logger('in methodOverride, %j', req.body);
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
       return req.body._method; // eslint-disable-line
     }

@@ -1,0 +1,21 @@
+extends /layouts/application.pug
+
+block content
+  table.table.table-stripped.table-hover
+    thead
+      tr
+        th
+          div.ml-1.float-left Status name
+          if isSignedIn()
+            div.mr-1.float-right
+              +buttonLink('newStatus', 'get', 'Добавить статус')
+    tbody
+      each status in statuses
+        tr
+          td
+            div.ml-1.float-left= status.name
+            if isSignedIn()
+              div.mr-1.float-right.btn-group
+                - const id = status.id;
+                +buttonLink(['status', { id }], 'get', 'Изменить', 'btn-secondary')
+                +buttonLink(['status', { id }], 'delete', 'Удалить', 'btn-danger')
