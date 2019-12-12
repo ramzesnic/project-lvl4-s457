@@ -1,8 +1,10 @@
 extends /layouts/application.pug
 
 block content
-  - const params = status ? ['status', { id: status.id }] : 'newStatus';
+  - const params = id ? ['status', { id }] : 'newStatus';
   - const url = params instanceof Array ? urlFor(...params) : urlFor(params);
   +formFor(f, { url, method })
     +input(f, 'name')
-    +button(f)
+    .form-group
+      +button(f)
+      +buttonLink('statusAll', 'get', 'Cancel', 'btn-secondary')

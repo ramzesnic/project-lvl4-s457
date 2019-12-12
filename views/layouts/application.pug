@@ -15,6 +15,7 @@ html(lang="en")
         ul.navbar-nav.mr-auto
           +getNavItem('users', 'Users')
           +getNavItem('statusAll', 'Status')
+          +getNavItem('tasksAll', 'Tasks')
         ul.navbar-nav
           if isSignedIn()
             li.nav-item

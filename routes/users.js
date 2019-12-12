@@ -1,4 +1,3 @@
-// @ts-check
 import buildFormObj from '../lib/formObjectBuilder';
 // @ts-ignore
 import { User } from '../models';
@@ -54,6 +53,9 @@ export default (router, container) => {
     .delete('userSettings', '/users/settings', async (ctx) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
+      if (!user) {
+        ctx.throw(401, 'Доступ запрещен');
+      }
       try {
         user.destroy();
         ctx.session = {};

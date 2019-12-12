@@ -1,4 +1,3 @@
-// @ts-check
 import buildFormObj from '../lib/formObjectBuilder';
 import { encrypt } from '../lib/secure';
 // @ts-ignore

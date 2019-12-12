@@ -1,4 +1,3 @@
-// @ts-check
 import _ from 'lodash';
 import path from 'path';
 import Koa from 'koa';
@@ -32,7 +31,7 @@ export default () => {
   app.use(async (ctx, next) => {
     ctx.state = {
       flash: ctx.flash,
-      isActiveUrl: (currentUrl) => currentUrl === ctx.url,
+      isActiveUrl: currentUrl => currentUrl === ctx.url,
       isSignedIn: () => ctx.session.userId !== undefined,
     };
     await next();
@@ -68,6 +67,7 @@ export default () => {
     basedir: path.join(__dirname, 'views'),
     helperPath: [
       { _ },
+      // @ts-ignore
       { urlFor: (...args) => router.url(...args) },
     ],
   });

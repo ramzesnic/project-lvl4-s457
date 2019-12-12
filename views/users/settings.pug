@@ -6,5 +6,6 @@ block content
     +input(f, 'firstName')
     +input(f, 'lastName')
     +input(f, 'password', { as: 'password' })
-    +button(f)
-  +buttonLink('userSettings', 'delete', 'Удалить пользователя', 'btn-danger')
+    .form-group
+      +button(f)
+      +buttonLink('userSettings', 'delete', 'Удалить пользователя', 'btn-danger')

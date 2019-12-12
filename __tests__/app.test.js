@@ -1,31 +1,11 @@
 import request from 'supertest';
 import matchers from 'jest-supertest-matchers';
-import faker from 'faker';
+import lib from './lib';
 
+// @ts-ignore
 import { User } from '../models';
 
 import app from '..';
-
-jest.useFakeTimers();
-jest.setTimeout(30000);
-
-const getFakeUser = () => ({
-  email: faker.internet.email(),
-  password: faker.internet.password(),
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-});
-
-const signIn = async (server, form) => {
-  const res = await request.agent(server)
-    .post('/session')
-    .send({
-      form,
-    });
-  return res;
-};
-
-const getAuthCookie = res => res.headers['set-cookie'];
 
 describe('requests', () => {
   let server;
@@ -41,12 +21,14 @@ describe('requests', () => {
   it('GET 200', async () => {
     const res = await request.agent(server)
       .get('/');
+    // @ts-ignore
     expect(res).toHaveHTTPStatus(200);
   });
 
   it('GET 404', async () => {
     const res = await request.agent(server)
       .get('/wrong-path');
+    // @ts-ignore
     expect(res).toHaveHTTPStatus(404);
   });
 
@@ -58,7 +40,7 @@ describe('requests', () => {
 
 describe('Test user', () => {
   let server;
-  const fUser = getFakeUser();
+  const fUser = lib.getFakeUser();
   beforeAll(async () => {
     await User.sync();
   });
@@ -85,17 +67,18 @@ describe('Test user', () => {
   it('Get users', async () => {
     const res = await request.agent(server)
       .get('/users');
+    // @ts-ignore
     expect(res).toHaveHTTPStatus(200);
     expect(res.text.includes(fUser.email)).toBeTruthy();
   });
 
   it('Sign in', async () => {
-    const res = await signIn(server, fUser);
+    const res = await lib.signIn(server, fUser);
     expect(res.headers.location).toBe('/');
   });
 
   it('Sign out', async () => {
-    await signIn(server, fUser);
+    await lib.signIn(server, fUser);
     await request.agent(server)
       .delete('/session')
       .expect(302);
@@ -106,14 +89,14 @@ describe('Test user', () => {
       email: 'fake@email.com',
       password: 'fakepassword',
     };
-    const res = await signIn(server, fakeData);
+    const res = await lib.signIn(server, fakeData);
     expect(res.headers.location === '/').toBeFalsy();
   });
 
   it('Get user data', async () => {
     const { email } = fUser;
-    const signedUserResponse = await signIn(server, fUser);
-    const authCookie = getAuthCookie(signedUserResponse);
+    const signedUserResponse = await lib.signIn(server, fUser);
+    const authCookie = lib.getAuthCookie(signedUserResponse);
     const res = await request.agent(server)
       .get('/users/settings')
       .set('Cookie', authCookie);
@@ -127,9 +110,9 @@ describe('Test user', () => {
         email,
       },
     });
-    const newUserData = getFakeUser();
-    const signedUserResponse = await signIn(server, fUser);
-    const authCookie = getAuthCookie(signedUserResponse);
+    const newUserData = lib.getFakeUser();
+    const signedUserResponse = await lib.signIn(server, fUser);
+    const authCookie = lib.getAuthCookie(signedUserResponse);
     await request.agent(server)
       .patch('/users/settings')
       .set('Cookie', authCookie)
@@ -142,8 +125,8 @@ describe('Test user', () => {
 
   it('Delete user', async () => {
     const { email } = fUser;
-    const signedUserResponse = await signIn(server, fUser);
-    const authCookie = getAuthCookie(signedUserResponse);
+    const signedUserResponse = await lib.signIn(server, fUser);
+    const authCookie = lib.getAuthCookie(signedUserResponse);
     await request.agent(server)
       .delete('/users/settings')
       .set('Cookie', authCookie);

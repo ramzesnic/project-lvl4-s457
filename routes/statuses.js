@@ -1,7 +1,8 @@
-// @ts-check
 import buildFormObj from '../lib/formObjectBuilder';
+import checkAuth from '../lib/checkAuth';
 // @ts-ignore
 import { Status } from '../models';
+
 
 export default (router, container) => {
   const { logger } = container;
@@ -10,7 +11,7 @@ export default (router, container) => {
       const statuses = await Status.findAll();
       ctx.render('status', { statuses });
     })
-    .delete('status', '/status/:id', async (ctx) => {
+    .delete('status', '/status/:id', checkAuth, async (ctx) => {
       const { id } = ctx.params;
       const status = await Status.findByPk(id);
       logger(status);
@@ -28,7 +29,7 @@ export default (router, container) => {
       const method = 'post';
       ctx.render('status/new', { f: buildFormObj(status), method });
     })
-    .post('newStatus', '/status/new', async (ctx) => {
+    .post('newStatus', '/status/new', checkAuth, async (ctx) => {
       const { request: { body: { form } } } = ctx;
       const status = Status.build(form);
       try {
@@ -44,9 +45,9 @@ export default (router, container) => {
       const { id } = ctx.params;
       const status = await Status.findByPk(id);
       const method = 'patch';
-      ctx.render('status/new', { f: buildFormObj(status), status, method });
+      ctx.render('status/new', { f: buildFormObj(status), id, method });
     })
-    .patch('status', '/status/:id', async (ctx) => {
+    .patch('status', '/status/:id', checkAuth, async (ctx) => {
       const { id } = ctx.params;
       const { request: { body: { form } } } = ctx;
       const status = await Status.findByPk(id);
@@ -55,8 +56,8 @@ export default (router, container) => {
         ctx.flash.set('Статус обновлен');
         ctx.redirect(router.url('statusAll'));
       } catch (e) {
-        ctx.flash.set('Ошибка обновления статуса');
-        ctx.redirect(router.url('statusAll'));
+        const method = 'path';
+        ctx.render('status/new', { f: buildFormObj(status, e), id, method });
       }
     });
 };

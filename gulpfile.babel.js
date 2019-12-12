@@ -1,4 +1,3 @@
-// @ts-check
 import gulp from 'gulp';
 import getServer from '.';
 
