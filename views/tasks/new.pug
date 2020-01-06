@@ -1,0 +1,14 @@
+extends /layouts/application.pug
+
+block content
+  - const params = id ? ['editTask', { id }] : 'newTask';
+  - const url = params instanceof Array ? urlFor(...params) : urlFor(params);
+  +formFor(f, { url, method })
+    +input(f, 'name')
+    +textarea(f, 'description')
+    +option(f, 'status', defaults.statusId)
+    +option(f, 'assignedTo', defaults.executorId)
+    +input(f, 'tags', { as: 'text' }, 'Введите теги через ;')
+    .form-group
+      +button(f)
+      +buttonLink('tasksAll', 'get', 'Cancel', 'btn-secondary')

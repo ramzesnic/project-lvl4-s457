@@ -1,0 +1,27 @@
+extends /layouts/application.pug
+
+block content
+  div.jumbotron.mt-4
+    h1.display-4= task.name
+    p.lead= task.description
+    hr.my-4
+    div.container
+      div.row
+        div.col Creator
+        div.col= task.Creator ? task.Creator.fullName : 'nobody'
+      div.row
+        div.col Assigned to
+        div.col= task.Executor ? task.Executor.fullName : 'nobody'
+      div.row
+        div.col Status
+        div.col= task.Status.name
+      div.row
+        div.col Created At
+        div.col= task.formatedDate
+    p.font-weight-bold.mt-2 Tags:
+    p= rawTags
+    p.lead
+      if isSignedIn()
+        - const id = task.id
+        +buttonLink(['newTask', { id }], 'get', 'Изменить', 'btn-secondary')
+        +buttonLink(['task', { id }], 'delete', 'Удалить', 'btn-danger')

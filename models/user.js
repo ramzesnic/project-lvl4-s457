@@ -1,4 +1,5 @@
 import { encrypt } from '../lib/secure';
+import { formatedDate as getLocalDate } from '../lib/helpers';
 
 export default (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -33,10 +34,13 @@ export default (sequelize, DataTypes) => {
         return `${this.firstName} ${this.lastName}`;
       },
       formatedDate() {
-        const date = new Date(this.createdAt);
-        return date.toLocaleString();
+        return getLocalDate(this);
       },
     },
   });
+  User.associate = (models) => {
+    User.hasMany(models.Task, { as: 'CreatorTask', foreignKey: 'creator' });
+    User.hasMany(models.Task, { as: 'UserTask', foreignKey: 'assignedTo' });
+  };
   return User;
 };

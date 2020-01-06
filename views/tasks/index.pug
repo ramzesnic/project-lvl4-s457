@@ -1,0 +1,65 @@
+extends /layouts/application.pug
+
+block filters
+  form.form-inline.mt-4
+    div.form-group.mx-2
+      select(name='status' class='custom-select form-control')
+        each status in filtersOptions.statuses
+          if defaults.status.id === status.id
+            option(selected=status.id value=status.id)= status.name
+          else
+            option(value=status.id)= status.name
+        if defaults.status.id === 'null'
+          option(selected=defaults.status.id value=defaults.status.id)= defaults.status.name
+        else
+          option(value='null')= 'Status…'
+            
+    div.form-group.mx-2
+      select(name='assignedTo' class='custom-select form-control')
+        each executor in filtersOptions.executors
+          if defaults.assignedTo.id === executor.id
+            option(selected=executor.id value=executor.id)= executor.fullName
+          else
+            option(value=executor.id)= executor.fullName
+        if defaults.assignedTo.id === 'null'
+          option(selected=defaults.assignedTo.id value=defaults.assignedTo.id)= defaults.assignedTo.name
+        else
+          option(value='null')= 'AssignedTo…'
+    div.form-group.mx-2
+      input(type='text' name='tags' value=defaults.tags placeholder='Теги через ";" …').form-control
+    if isSignedIn()
+      div.form-group.custom-control.custom-checkbox.mx-2
+        input(name='self' checked=defaults.self type='checkbox' id='self-checkbox').custom-control-input
+        label(for='self-checkbox').custom-control-label Только мои задачи
+    div.form-group.mx-2
+      input(type='submit' value='Search').btn.btn-primary
+          
+
+block content
+  table.table.table-stripped.table-hover.mt-4
+    thead
+      tr
+        th Task name
+        th Status
+        th Creator
+        th Assigned to
+        th Created At
+        th 
+          if isSignedIn()
+            +buttonLink('newTask', 'get', 'Добавить Задачу')
+    tbody
+      each task in tasks
+        tr
+          td= task.name
+          td= task.Status.name
+          td= task.Creator ? task.Creator.fullName : 'nobody'
+          td= task.Executor ? task.Executor.fullName : 'nobody'
+          td= task.formatedDate
+          td
+            div.mr-1.btn-group
+              - const id = task.id;
+              if isSignedIn()
+                +buttonLink(['editTask', { id }], 'get', 'Изменить', 'btn-secondary')
+                +buttonLink(['task', { id }], 'delete', 'Удалить', 'btn-danger')
+              else
+                +buttonLink(['task', { id }], 'get', 'Посмотреть', 'btn-secondary')

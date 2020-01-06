@@ -8,8 +8,8 @@ export default (sequelize, DataTypes) => {
       },
     },
   }, {});
-  Tag.associate = function(models) {
-    // associations can be defined here
+  Tag.associate = (models) => {
+    Tag.belongsToMany(models.Task, { through: 'TaskTag', foreignKey: 'tagId', onDelete: 'cascade' });
   };
   return Tag;
 };

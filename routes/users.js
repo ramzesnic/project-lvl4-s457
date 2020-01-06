@@ -1,9 +1,9 @@
-import buildFormObj from '../lib/formObjectBuilder';
+// import buildFormObj from '../lib/formObjectBuilder';
 // @ts-ignore
-import { User } from '../models';
 
 export default (router, container) => {
-  const { logger } = container;
+  const { User } = container.models;
+  const { buildFormObj, logger } = container.lib;
   router
     .get('newUser', '/users/new', async (ctx) => {
       const user = {};

@@ -1,11 +1,10 @@
-import buildFormObj from '../lib/formObjectBuilder';
-import checkAuth from '../lib/checkAuth';
+// import buildFormObj from '../lib/formObjectBuilder';
+// import checkAuth from '../lib/checkAuth';
 // @ts-ignore
-import { Status } from '../models';
-
 
 export default (router, container) => {
-  const { logger } = container;
+  const { Status } = container.models;
+  const { buildFormObj, checkAuth, logger } = container.lib;
   router
     .get('statusAll', '/status/all', async (ctx) => {
       const statuses = await Status.findAll();

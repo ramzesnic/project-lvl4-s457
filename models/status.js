@@ -8,5 +8,8 @@ export default (sequelize, DataTypes) => {
       },
     },
   }, {});
+  Status.associate = (models) => {
+    Status.hasMany(models.Task, { foreignKey: 'status' });
+  };
   return Status;
 };

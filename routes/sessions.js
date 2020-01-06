@@ -1,10 +1,10 @@
-import buildFormObj from '../lib/formObjectBuilder';
-import { encrypt } from '../lib/secure';
+// import buildFormObj from '../lib/formObjectBuilder';
+// import { encrypt } from '../lib/secure';
 // @ts-ignore
-import { User } from '../models';
 
 export default (router, container) => {
-  const { logger } = container;
+  const { User } = container.models;
+  const { encrypt, buildFormObj, logger } = container.lib;
   router
     .get('newSession', '/session/new', async (ctx) => {
       const data = {};

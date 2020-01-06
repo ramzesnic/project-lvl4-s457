@@ -37,6 +37,9 @@ compose-dist-build:
 compose-publish: compose-dist-build
 	docker-compose run web npm publish
 
+compose-console:
+	docker-compose run web npx gulp console
+
 test:
 	npm test
 

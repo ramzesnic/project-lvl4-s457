@@ -7,3 +7,4 @@ public/assets
 install-modules.sh
 .env
 *.sqlite
+*.todo

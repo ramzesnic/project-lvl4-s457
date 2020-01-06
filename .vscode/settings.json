@@ -3,7 +3,7 @@
     {
       "database": "${workspaceFolder}/db.development.sqlite",
       "dialect": "SQLite",
-      "name": "base"
+      "name": "dev"
     }
   ],
   "sqltools.useNodeRuntime": true

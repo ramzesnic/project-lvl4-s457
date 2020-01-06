@@ -9,11 +9,34 @@ mixin formFor(f, options = {})
       input(name='_method' type='hidden' value= method)
     block
 
-mixin input(f, property, options = { as: 'text' })
+mixin input(f, property, options = { as: 'text' }, placeholder = '')
   - const value = f.object[property] === undefined ? '' : f.object[property]
   .form-group(class=(f.errors[property] && 'has-danger'))
     label= _.upperFirst(property)
-    input(name=getInputName(f, property) class='form-control' type=options['as'] value=`${value}`)
+    input(name=getInputName(f, property) class='form-control' type=options['as'] value=`${value}` placeholder = `${placeholder}`)
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+
+mixin option(f, property, defaultId)
+  - const options = f.object[property];
+  //- - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    label= _.upperFirst(property)
+    select(name=getInputName(f, property) class='custom-select')
+      //- option(selected)= selectedMsg
+      each option in options
+        if option.id === defaultId 
+          option(selected= option.id value= option.id)= option.name
+        else
+          option(value= option.id)= option.name
+    if f.errors[property]
+      .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+
+mixin textarea(f, property)
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+  .form-group(class=(f.errors[property] && 'has-danger'))
+    label= _.upperFirst(property)
+    textarea(name=getInputName(f, property), class='form-control' rows=3)= value
     if f.errors[property]
       .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
 
