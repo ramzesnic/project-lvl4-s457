@@ -71,6 +71,7 @@ export default () => {
       { urlFor: (...args) => router.url(...args) },
     ],
   });
+  // @ts-ignore
   pug.use(app);
 
   app.use(async (ctx, next) => {

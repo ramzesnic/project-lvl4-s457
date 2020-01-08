@@ -3,8 +3,10 @@ import matchers from 'jest-supertest-matchers';
 import { Op } from 'sequelize';
 import lib from './lib';
 
-// @ts-ignore
-import { User, Status, Task, Tag, TaskTag } from '../models';
+import {
+  // @ts-ignore
+  User, Status, Task, Tag, TaskTag,
+} from '../models';
 
 import app from '..';
 

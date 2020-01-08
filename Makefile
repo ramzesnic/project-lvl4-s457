@@ -10,7 +10,10 @@ compose:
 compose-install:
 	docker-compose run web npm install
 
-compose-setup: prepare compose-build compose-install
+compose-setup: prepare compose-build compose-install compose-db-setup
+
+compose-db-setup:
+	docker-compose run web npx sequelize db:migrate
 
 compose-kill:
 	docker-compose kill
