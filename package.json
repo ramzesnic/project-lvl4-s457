@@ -12,7 +12,7 @@
     ]
   },
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "start": "gulp server",
     "build": "npx webpack -p --env production",
     "postinstall": "npm run build"
