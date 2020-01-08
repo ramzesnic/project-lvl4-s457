@@ -12,7 +12,7 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --forceExit",
     "start": "gulp server",
     "build": "npx webpack -p --env production",
     "postinstall": "npm run build"
