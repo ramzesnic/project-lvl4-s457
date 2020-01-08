@@ -142,4 +142,8 @@ describe('Test user', () => {
     server.close();
     done();
   });
+  afterAll((done) => {
+    server.close();
+    done();
+  });
 });

@@ -92,4 +92,8 @@ describe('Status test', () => {
     server.close();
     done();
   });
+  afterAll((done) => {
+    server.close();
+    done();
+  });
 });
