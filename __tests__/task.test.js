@@ -31,10 +31,10 @@ describe('Task test', () => {
     await lib.createUser(fakerUserOne);
     await lib.createUser(fakerUserTwo);
     await Status.bulkCreate(testStatuses);
+    server = app().listen();
   });
 
   beforeEach(async () => {
-    server = app().listen();
     authCookie = await lib.getTestUserCookie(server);
   });
 
@@ -155,5 +155,10 @@ describe('Task test', () => {
       .send();
     const task = await Task.findByPk(id);
     expect(task).toBeFalsy();
+  });
+
+  afterAll((done) => {
+    server.close();
+    done();
   });
 });
