@@ -26,7 +26,6 @@ export default (router, container) => {
         self,
       };
       logger(defaults);
-      // logger(scopes);
       const tasks = await Task.scope(['defaultScope', ...scopes])
         .findAll();
       logger(tasks);
