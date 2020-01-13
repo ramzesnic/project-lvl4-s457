@@ -1,7 +1,3 @@
-// import buildFormObj from '../lib/formObjectBuilder';
-// import checkAuth from '../lib/checkAuth';
-// @ts-ignore
-
 export default (router, container) => {
   const { Status } = container.models;
   const { buildFormObj, checkAuth, logger } = container.lib;
@@ -56,7 +52,7 @@ export default (router, container) => {
         ctx.redirect(router.url('statusAll'));
       } catch (e) {
         const method = 'path';
-        ctx.render('status/new', { f: buildFormObj(status, e), id, method });
+        ctx.render('status/edit', { f: buildFormObj(status, e), id, method });
       }
     });
 };

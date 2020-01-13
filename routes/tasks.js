@@ -34,7 +34,8 @@ export default (router, container) => {
     })
     .get('newTask', '/tasks/new', async (ctx) => {
       const { userId: creator } = ctx.session;
-      const defaults = { statusId: 1, executorId: creator };
+      const statusId = (await Status.findOne()).id;
+      const defaults = { statusId, executorId: creator };
       const method = 'post';
       const executors = getExecutorsData(await User.findAll());
       const statuses = getStatusesData(await Status.findAll());
@@ -112,7 +113,7 @@ export default (router, container) => {
       } catch (e) {
         const defaults = { statusId: form.status, executorId: form.assignedTo };
         const method = 'patch';
-        ctx.render('tasks/new', { f: buildFormObj(task, e), method, defaults });
+        ctx.render('tasks/edit', { f: buildFormObj(task, e), method, defaults });
       }
     })
     .delete('task', '/task/:id', checkAuth, async (ctx) => {
