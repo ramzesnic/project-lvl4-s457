@@ -20,8 +20,8 @@ export default (router, container) => {
         self && self === 'on' ? { method: ['byCreator', ctx.session.userId] } : null,
       ].filter(scope => scope);
       const defaults = {
-        status: status && status !== 'null' ? { id: Number(status) } : { id: 'null', name: 'Status…' },
-        assignedTo: assignedTo && assignedTo !== 'null' ? { id: Number(assignedTo) } : { id: 'null', name: 'AssignedTo…' },
+        status: status && status !== 'null' ? { id: Number(status) } : { id: 'null', name: ctx.t('view.task.filter.status') },
+        assignedTo: assignedTo && assignedTo !== 'null' ? { id: Number(assignedTo) } : { id: 'null', name: ctx.t('view.task.filter.assigned_to') },
         tags,
         self,
       };
@@ -55,7 +55,7 @@ export default (router, container) => {
         const tags = await Tag.findAll({ where: { name: rawTagsArray } });
         logger('TAGS: %j', tags);
         await task.setTags(tags);
-        ctx.flash.set('Задача сохранена');
+        ctx.flash.set(ctx.t('flash.created.task'));
         ctx.redirect(router.url('tasksAll'));
       } catch (e) {
         const method = 'post';
@@ -108,7 +108,7 @@ export default (router, container) => {
         await Tag.bulkCreate(rawTags, { updateOnDuplicate: ['updatedAt'], include: [Task] });
         const tags = await Tag.findAll({ where: { name: rawTagsArray } });
         await task.setTags(tags);
-        ctx.flash.set('Задача обновлена');
+        ctx.flash.set(ctx.t('flash.updated.task'));
         ctx.redirect(router.url('tasksAll'));
       } catch (e) {
         const defaults = { statusId: form.status, executorId: form.assignedTo };
@@ -122,10 +122,10 @@ export default (router, container) => {
       try {
         await task.setTags([]); // cascade deleting not work
         await task.destroy();
-        ctx.flash.set('Задача удалена');
+        ctx.flash.set(ctx.t('flash.delete.ok.task'));
         ctx.redirect(router.url('tasksAll'));
       } catch (e) {
-        ctx.flash.set('Ошибка удаления задачи');
+        ctx.flash.set(ctx.t('flash.delete.fail.task'));
         ctx.redirect(router.url('tasksAll'));
       }
     });

@@ -1,0 +1,72 @@
+{
+  "test": "test aaaaaaaaaaaaa",
+  "view": {
+    "application": {
+      "title": "Task Manager",
+      "users": "Users",
+      "statuses": "Statuses",
+      "tasks": "Tasks",
+      "settings": "Settings",
+      "sign_in": "Sign In",
+      "sign_out": "Sign out",
+      "sign_up": "Sign Up"
+    },
+    "buttons": {
+      "save": "Save",
+      "delete": "Delete",
+      "search": "Search",
+      "add_task": "Add task",
+      "change": "Change",
+      "view": "View",
+      "cancel": "Cancel"
+    },
+    "user": {
+      "full_name": "Full name",
+      "email": "Email",
+      "created_at": "Created At"
+    },
+    "task": {
+      "name": "Task name",
+      "status": "Status",
+      "creator": "Creator",
+      "assigned_to": "Assigned to",
+      "created_at": "Created At",
+      "filter": {
+        "my_tasks": "Only my tasks",
+        "status": "Status",
+        "assigned_to": "Assigned to",
+        "tags_placeholder": "Tags through \";\""
+      }
+    },
+    "status": {
+      "name": "Status name",
+      "add": "Add status"
+    }
+  },
+  "flash": {
+    "auth_fail": "Email or password were wrong",
+    "access_denied": "Access denied",
+    "updated": {
+      "status": "Status was updated",
+      "task": "Task was updated",
+      "user": "User was updated"
+    },
+    "created": {
+      "status": "Status was created",
+      "task": "Task was created",
+      "user": " User was created"
+    },
+    "delete": {
+      "fail": {
+        "status": "Error deleting status",
+        "task": "Error deleting task",
+        "user": "Error deleting user"
+      },
+      "ok": {
+        "status": "Status was deleted",
+        "task": "Task was deleted",
+        "user": "User was deleted"
+      }
+    }
+  }
+}

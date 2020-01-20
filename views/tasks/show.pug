@@ -23,5 +23,5 @@ block content
     p.lead
       if isSignedIn()
         - const id = task.id
-        +buttonLink(['newTask', { id }], 'get', 'Изменить', 'btn-secondary')
-        +buttonLink(['task', { id }], 'delete', 'Удалить', 'btn-danger')
+        +buttonLink(['newTask', { id }], 'get', t('view.buttons.change'), 'btn-secondary')
+        +buttonLink(['task', { id }], 'delete', t('view.buttons.delete'), 'btn-danger')

@@ -12,6 +12,7 @@ import bodyParser from 'koa-bodyparser';
 import methodOverride from 'koa-methodoverride';
 import Rollbar from 'rollbar';
 import webpackConfig from './webpack.config';
+import locates from './lib/locales';
 import container from './container';
 import addRoutes from './routes';
 
@@ -27,12 +28,14 @@ export default () => {
   app.keys = ['my app key'];
   // @ts-ignore
   app.use(session(app));
+  app.use(locates);
   app.use(flash());
   app.use(async (ctx, next) => {
     ctx.state = {
       flash: ctx.flash,
       isActiveUrl: currentUrl => currentUrl === ctx.url,
       isSignedIn: () => ctx.session.userId !== undefined,
+      t: ctx.t,
     };
     await next();
   });

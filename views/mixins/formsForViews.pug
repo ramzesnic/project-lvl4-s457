@@ -6,10 +6,10 @@ mixin getTaskForm(id, f, method, defaults)
     +textarea(f, 'description')
     +option(f, 'status', defaults.statusId)
     +option(f, 'assignedTo', defaults.executorId)
-    +input(f, 'tags', { as: 'text' }, 'Введите теги через ;')
+    +input(f, 'tags', { as: 'text' }, t('view.task.filter.tags_placeholder'))
     .form-group
       +button(f)
-      +buttonLink('tasksAll', 'get', 'Cancel', 'btn-secondary')
+      +buttonLink('tasksAll', 'get', t('view.buttons.cancel'), 'btn-secondary')
 
 mixin getStatusForm(id, f, method)
   - const params = id ? ['status', { id }] : 'newStatus';
@@ -18,4 +18,4 @@ mixin getStatusForm(id, f, method)
     +input(f, 'name')
     .form-group
       +button(f)
-      +buttonLink('statusAll', 'get', 'Cancel', 'btn-secondary')
+      +buttonLink('statusAll', 'get', t('view.buttons.cancel'), 'btn-secondary')

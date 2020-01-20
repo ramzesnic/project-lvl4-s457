@@ -12,10 +12,10 @@ export default (router, container) => {
       logger(status);
       try {
         status.destroy();
-        ctx.flash.set('Сатус удален');
+        ctx.flash.set(ctx.t('flash.delete.ok.status'));
         ctx.redirect(router.url('statusAll'));
       } catch (e) {
-        ctx.flash.set('Ошибка удаления статуса');
+        ctx.flash.set(ctx.t('flash.delete.fail.status'));
         ctx.redirect(router.url('statusAll'));
       }
     })
@@ -29,7 +29,7 @@ export default (router, container) => {
       const status = Status.build(form);
       try {
         await status.save();
-        ctx.flash.set('Статус сохранен');
+        ctx.flash.set(ctx.t('flash.created.status'));
         ctx.redirect(router.url('statusAll'));
       } catch (e) {
         const method = 'post';
@@ -48,7 +48,7 @@ export default (router, container) => {
       const status = await Status.findByPk(id);
       try {
         await status.update(form);
-        ctx.flash.set('Статус обновлен');
+        ctx.flash.set(ctx.t('flash.updated.status'));
         ctx.redirect(router.url('statusAll'));
       } catch (e) {
         const method = 'path';

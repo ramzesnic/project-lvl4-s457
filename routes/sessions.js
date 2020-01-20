@@ -23,7 +23,7 @@ export default (router, container) => {
         return;
       }
       logger('email or password were wrong %j', user);
-      ctx.flash.set('email or password were wrong');
+      ctx.flash.set(ctx.t('flash.auth_fail'));
       ctx.redirect(router.url('newSession'));
     })
     .delete('session', '/session', (ctx) => {

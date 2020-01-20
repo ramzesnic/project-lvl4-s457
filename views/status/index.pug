@@ -5,10 +5,10 @@ block content
     thead
       tr
         th
-          div.ml-1.float-left Status name
+          div.ml-1.float-left= t('view.status.name')
           if isSignedIn()
             div.mr-1.float-right
-              +buttonLink('newStatus', 'get', 'Добавить статус')
+              +buttonLink('newStatus', 'get', t('view.status.add'))
     tbody
       each status in statuses
         tr
@@ -17,5 +17,5 @@ block content
             if isSignedIn()
               div.mr-1.float-right.btn-group
                 - const id = status.id;
-                +buttonLink(['status', { id }], 'get', 'Изменить', 'btn-secondary')
-                +buttonLink(['status', { id }], 'delete', 'Удалить', 'btn-danger')
+                +buttonLink(['status', { id }], 'get', t('view.buttons.change'), 'btn-secondary')
+                +buttonLink(['status', { id }], 'delete', t('view.buttons.delete'), 'btn-danger')

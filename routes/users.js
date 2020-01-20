@@ -20,7 +20,7 @@ export default (router, container) => {
       logger('User %j', user);
       try {
         await user.save();
-        ctx.flash.set('User has been created');
+        ctx.flash.set(ctx.t('flash.created.user'));
         ctx.redirect(router.url('root'));
       } catch (e) {
         logger('Error %j', e);
@@ -31,7 +31,7 @@ export default (router, container) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
       if (!user) {
-        ctx.throw(401, 'Доступ запрещен');
+        ctx.throw(401, ctx.t('flash.access_denied'));
       }
       ctx.render('users/settings', { f: buildFormObj(user) });
     })
@@ -40,11 +40,11 @@ export default (router, container) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
       if (!user) {
-        ctx.throw(401, 'Доступ запрещен');
+        ctx.throw(401, ctx.t('flash.access_denied'));
       }
       try {
         await user.update(form);
-        ctx.flash.set('Пользователь обновлен');
+        ctx.flash.set(ctx.t('flash.updated.user'));
         ctx.redirect(router.url('userSettings'));
       } catch (e) {
         ctx.render('users/settings', { f: buildFormObj(user, e) });
@@ -54,15 +54,15 @@ export default (router, container) => {
       const { userId } = ctx.session;
       const user = await User.findByPk(userId);
       if (!user) {
-        ctx.throw(401, 'Доступ запрещен');
+        ctx.throw(401, ctx.t('flash.access_denied'));
       }
       try {
         user.destroy();
         ctx.session = {};
-        ctx.flash.set('Пользователь удален');
+        ctx.flash.set(ctx.t('flash.delete.ok.user'));
         ctx.redirect(router.url('root'));
       } catch (e) {
-        ctx.flash.set('Ошибка удаления пользователя');
+        ctx.flash.set(ctx.t('flash.delete.fail.user'));
         ctx.redirect(router.url('userSettings'));
       }
     });

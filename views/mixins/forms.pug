@@ -42,8 +42,8 @@ mixin textarea(f, property)
 
 mixin button(f, type = 'submit')
   //- .form-group
-  input(class='btn btn-primary mr-2' type=`${type}` value=`Save`)
+  input(class='btn btn-primary mr-2' type=`${type}` value=t('view.buttons.save'))
 
-mixin buttonLink(btnHref = 'root', btnMethog = 'post', btnValue = 'Save', btnClass = 'btn-primary')
+mixin buttonLink(btnHref = 'root', btnMethog = 'post', btnValue = t('view.buttons.save'), btnClass = 'btn-primary')
   - const url = btnHref instanceof Array ? urlFor(...btnHref) : urlFor(btnHref)
   a(href=url class=`btn ${btnClass}` data-method=`${btnMethog}` rel='nofollow')=btnValue

@@ -4,29 +4,29 @@ include /mixins/helpers.pug
 doctype html
 html(lang="en")
   head
-    title= Title
+    title= t('view.application.title')
     script(src='/assets/main.js')
   body
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href="/") Task Manager
+      a.navbar-brand(href="/")= t('view.application.title')
       button.navbar-toggler(data-toggle="collapse" data-target="#navbarSupportedContent")
         span.navbar-toggler-icon
       .collapse.navbar-collapse
         ul.navbar-nav.mr-auto
-          +getNavItem('users', 'Users')
-          +getNavItem('statusAll', 'Status')
-          +getNavItem('tasksAll', 'Tasks')
+          +getNavItem('users', t('view.application.users'))
+          +getNavItem('statusAll', t('view.application.statuses'))
+          +getNavItem('tasksAll', t('view.application.tasks'))
         ul.navbar-nav
           if isSignedIn()
             li.nav-item
-              a.nav-link(href=urlFor('userSettings')) Settings
+              a.nav-link(href=urlFor('userSettings'))= t('view.application.settings')
             li.nav-item
-              a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow') Sign Out
+              a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow')= t('view.application.sign_out')
           else
             li.nav-item
-              a.nav-link(href=urlFor('newSession')) Sign In
+              a.nav-link(href=urlFor('newSession'))= t('view.application.sign_in')
             li.nav-item
-              a.nav-link(href=urlFor('newUser')) Sign Up
+              a.nav-link(href=urlFor('newUser'))= t('view.application.sign_up')
     .container
       - const msg = flash.get()
       if msg
