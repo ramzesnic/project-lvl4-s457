@@ -8,3 +8,4 @@ install-modules.sh
 .env
 *.sqlite
 *.todo
+.vscode
