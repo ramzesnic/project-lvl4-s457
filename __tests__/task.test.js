@@ -96,7 +96,7 @@ describe('Task test', () => {
     const userOne = await User.findOne({ where: { email: fakerUserOne.email } });
     const userTwo = await User.findOne({ where: { email: fakerUserTwo.email } });
     const res = await request.agent(server)
-      .get(`/tasks/all?assignedTo=${userOne.id}`)
+      .get(`/tasks/all?executor=${userOne.id}`)
       .send();
     expect(res.text.includes(`<td>${userOne.fullName}</td>`)).toBeTruthy();
     expect(res.text.includes(`<td>${userTwo.fullName}</td>`)).toBeFalsy();
@@ -133,13 +133,13 @@ describe('Task test', () => {
     });
     const taskNames = tasks.map(name => name);
     const res = await request.agent(server)
-      .get('/tasks/all?self=on')
+      .get('/tasks/all?creator=on')
       .set('Cookie', authCookie)
       .send();
     expect(res.text.includes(taskName)).toBeTruthy();
     taskNames.forEach(async (name) => {
       const { text } = await request.agent(server)
-        .get('/tasks/all?self=on')
+        .get('/tasks/all?creator=on')
         .set('Cookie', authCookie)
         .send();
       expect(text.includes(name)).toBeFalsy();

@@ -3,34 +3,21 @@ export default (router, container) => {
     Task, User, Status, Tag,
   } = container.models;
   const {
-    buildFormObj, logger, checkAuth, getTagsArray, getTagsObject, getStatusesData, getExecutorsData,
+    buildFormObj,
+    logger, filter, checkAuth, getTagsArray, getTagsObject, getStatusesData, getExecutorsData,
   } = container.lib;
   router
     .get('tasksAll', '/tasks/all', async (ctx) => {
       const executors = await User.findAll();
       const statuses = await Status.findAll();
-      const {
-        status, assignedTo, tags, self,
-      } = ctx.query;
-      const tagsArray = tags ? getTagsArray(tags) : '';
-      const scopes = [
-        tagsArray.length > 0 ? { method: ['byTags', tagsArray] } : null,
-        status && status !== 'null' ? { method: ['byStatus', status] } : null,
-        assignedTo && assignedTo !== 'null' ? { method: ['byExecutor', assignedTo] } : null,
-        self && self === 'on' ? { method: ['byCreator', ctx.session.userId] } : null,
-      ].filter(scope => scope);
-      const defaults = {
-        status: status && status !== 'null' ? { id: Number(status) } : { id: 'null', name: ctx.t('view.task.filter.status') },
-        assignedTo: assignedTo && assignedTo !== 'null' ? { id: Number(assignedTo) } : { id: 'null', name: ctx.t('view.task.filter.assigned_to') },
-        tags,
-        self,
-      };
-      logger(defaults);
+      const scopes = filter(ctx);
+      ctx.state.filter = ctx.query;
+      logger('Filter %j', scopes);
       const tasks = await Task.scope(['defaultScope', ...scopes])
         .findAll();
       logger(tasks);
       const filtersOptions = { executors, statuses };
-      ctx.render('tasks', { tasks, filtersOptions, defaults });
+      ctx.render('tasks', { tasks, filtersOptions });
     })
     .get('newTask', '/tasks/new', async (ctx) => {
       const { userId: creator } = ctx.session;

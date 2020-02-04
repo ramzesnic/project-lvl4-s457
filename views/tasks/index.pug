@@ -5,35 +5,35 @@ block filters
     div.form-group.mx-2
       select(name='status' class='custom-select form-control')
         each status in filtersOptions.statuses
-          if defaults.status.id === status.id
+          if status.id == filter.status
             option(selected=status.id value=status.id)= status.name
           else
             option(value=status.id)= status.name
-        if defaults.status.id === 'null'
-          option(selected=defaults.status.id value=defaults.status.id)= defaults.status.name
+        if !filter.status
+          option(selected='' value='')= t('view.task.filter.status')
         else
-          option(value='null')= t('view.task.filter.status')
+          option(value='')= t('view.task.filter.status')
             
     div.form-group.mx-2
-      select(name='assignedTo' class='custom-select form-control')
+      select(name='executor' class='custom-select form-control')
         each executor in filtersOptions.executors
-          if defaults.assignedTo.id === executor.id
+          if executor.id == filter.executor
             option(selected=executor.id value=executor.id)= executor.fullName
           else
             option(value=executor.id)= executor.fullName
-        if defaults.assignedTo.id === 'null'
-          option(selected=defaults.assignedTo.id value=defaults.assignedTo.id)= defaults.assignedTo.name
+        if !filter.executor
+          option(selected='' value='')= t('view.task.filter.assigned_to')
         else
-          option(value='null')= t('view.task.filter.assigned_to')
+          option(value='')= t('view.task.filter.assigned_to')
     div.form-group.mx-2
-      input(type='text' name='tags' value=defaults.tags placeholder=t('view.task.filter.tags_placeholder')).form-control
+      input(type='text' name='tags' value=filter.tags placeholder=t('view.task.filter.tags_placeholder')).form-control
     if isSignedIn()
       div.form-group.custom-control.custom-checkbox.mx-2
-        input(name='self' checked=defaults.self type='checkbox' id='self-checkbox').custom-control-input
+        input(name='creator' checked=filter.creator type='checkbox' id='self-checkbox').custom-control-input
         label(for='self-checkbox').custom-control-label= t('view.task.filter.my_tasks')
     div.form-group.mx-2
       input(type='submit' value=t('view.buttons.search')).btn.btn-primary
-          
+
 
 block content
   table.table.table-stripped.table-hover.mt-4
